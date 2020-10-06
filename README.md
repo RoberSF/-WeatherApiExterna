@@ -8,8 +8,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 Para correr la app es necesario: 
     -Tener instalado IDE para Angular(Visual Estudio Code en mi caso)
-    -Ejecutar npm install
-    -Ejecutar ng serve
+    -Git clone del respositorio https://github.com/RoberBicho/WeatherApiExterna (incluído node_modules a causa de modificaciones en librerías)
 
 Las explicaciones de código se encuentran comentados en su correspondiente archivo.
 
@@ -21,4 +20,5 @@ para uso en desarrollo.
 ## Estyles
 
 Para los estilos he usado las clases genéricas de Bootstrap
+
 
