@@ -1,0 +1,116 @@
+<h1>Bienvenidos a la prueba de Roberto Sánchez!!</h1>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Búsqueda</h4>
+
+                <div class="app-search">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                        </div>
+                        <input #input (keyup.enter)="search(input.value)" type="text" class="form-control" placeholder="Presiona Enter para buscar">
+                        <!-- Presionando enter Angular recoge el input y lo envía a través de la función para poder hacer la búsqueda en la APi -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Ciudades</h4>
+
+                <table class="table table-hover" *ngIf="ciudades.length > 0">
+                    <!-- Con ngIf conseguimos que se muestre la tabla si y solo si la petición http nos devuelve datos -->
+                    <tbody>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>País</th>
+                        </tr>
+                        <tr (click)="mostrarCiudad(ciudad)" *ngFor="let ciudad of ciudades" class="pointer">
+                            <!-- Elaboramos ngFor para recorrer el array de datos que nos devolvió la petición http para su representación y que el usuario pueda elegir -->
+                            <!-- Haciendo click en cualquier fila enviamos la ciudad para elegir la estación meteorologica para ser representada corectamente -->
+                            <td>{{ciudad.adminCode1}}</td>
+                            <td>{{ciudad.asciiName}}</td>
+                            <td>{{ciudad.countryName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Mensaje para cuando no existan registros o no exista ciudad -->
+                <div class="alert alert-info" *ngIf="ciudades.length === 0">
+                    No hay ciudad con ese nombre
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div *ngIf="tiempos.length != 0" class="col-6">
+        <!-- Nuevamente se crea un nfIf para mostrar los datos correctamente -->
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Elije la estación meteorológica:</h4>
+
+                <table class="table table-hover" *ngIf="ciudades.length > 0">
+                    <tbody>
+                        <tr (click)="ExistCity = true" (click)="mostrarTiempo(tiempo)" *ngFor="let tiempo of tiempos" class="pointer">
+                            <!-- Mismos procedimientos que en las líneas anteriores -->
+                            <td>{{tiempo.stationName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h1 *ngIf="ExistCity === true">La información de tu búsqueda es la siguiente:</h1>
+
+                <div>
+                    <table class="table table-hover" *ngIf="ciudades.length > 0">
+                        <tbody>
+                            <tr>
+                                <th>Nubosidad</th>
+                                <th>Temperatura</th>
+                                <th>Vel. Viento</th>
+                            </tr>
+                            <tr class="pointer">
+                                <td>{{pointOfCity.clouds}}</td>
+                                <td>{{pointOfCity.temperature}}</td>
+                                <td>{{pointOfCity.windSpeed}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="progress">
+                                        <div id="colorProgress" class="progress-bar bg-info progress-bar-striped progress-bar-animated" [style.width]="temperatura + '%'" [attr.aria-valuenow]="temperatura" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                                            <!-- Barra de progreso de bootstrap enlazada con propiedades del componente de angular -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Representación del punto geográfico elegido en google maps -->
+                    <agm-map *ngIf="ExistCity === true" [latitude]="lat" [zoom]="zoom" [longitude]="lng">
+                        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                    </agm-map>
+                </div>
+
+                <div class="alert alert-info" *ngIf="ciudades.length === 0">
+                    No hay ciudad con ese nombre
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
