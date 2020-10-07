@@ -21,4 +21,9 @@ para uso en desarrollo.
 
 Para los estilos he usado las clases genéricas de Bootstrap
 
+##URL Navegación
+
+http://localhost:4200/search
+
+
 
